@@ -9,6 +9,7 @@ public partial class HandoverLogPage : ContentPage
     static readonly Color LineGrey = Color.FromArgb("#98A8A3");
 
     string _step = "Pickup";
+    string _selectedCondition = "";
     bool _isConfirmed = true;
     Booking? _booking;
 
@@ -21,6 +22,42 @@ public partial class HandoverLogPage : ContentPage
         _step = (_booking?.Status is "Active" or "Lent") ? "Return" : "Pickup";      // already picked up -> return step
         BuildChips();
         UpdateCheckVisual();
+        UpdateConditionChips();
+    }
+
+    void OnChipGoodClicked(object? sender, EventArgs e)
+    {
+        _selectedCondition = "good";
+        NoteEntry.Text = "Item is in good and clean working condition. No issues noted.";
+        UpdateConditionChips();
+    }
+
+    void OnChipMarksClicked(object? sender, EventArgs e)
+    {
+        _selectedCondition = "marks";
+        NoteEntry.Text = "Minor cosmetic marks/scratches present, but functions properly.";
+        UpdateConditionChips();
+    }
+
+    void OnChipDamagedClicked(object? sender, EventArgs e)
+    {
+        _selectedCondition = "damaged";
+        NoteEntry.Text = "Noticeable damage or missing parts inspected during handover.";
+        UpdateConditionChips();
+    }
+
+    void UpdateConditionChips()
+    {
+        void StyleBtn(Button btn, bool active)
+        {
+            btn.BackgroundColor = active ? Navy : Colors.Transparent;
+            btn.TextColor = active ? Colors.White : Navy;
+            btn.BorderColor = Navy;
+        }
+
+        StyleBtn(ChipGood, _selectedCondition == "good");
+        StyleBtn(ChipMarks, _selectedCondition == "marks");
+        StyleBtn(ChipDamaged, _selectedCondition == "damaged");
     }
 
     void BuildChips()

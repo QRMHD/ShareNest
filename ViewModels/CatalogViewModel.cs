@@ -40,6 +40,10 @@ public class CatalogViewModel : BaseViewModel
     public ObservableCollection<Item> CommunityItems { get; } = new();
     public ObservableCollection<ChipItem> Chips { get; } = new();
     public ICommand FilterCommand { get; }
+    public ICommand RefreshCommand { get; }
+
+    bool _isRefreshing;
+    public bool IsRefreshing { get => _isRefreshing; set => Set(ref _isRefreshing, value); }
 
     public bool HasNoResults { get => _hasNoResults; private set => Set(ref _hasNoResults, value); }
     public bool HasMyItems { get => _hasMyItems; private set => Set(ref _hasMyItems, value); }
@@ -61,6 +65,12 @@ public class CatalogViewModel : BaseViewModel
         foreach (var name in new[] { "All", "Tools", "Yard", "Event", "Moving" })
             Chips.Add(new ChipItem(name, SelectCategory) { IsSelected = name == "All" });
         FilterCommand = new Command(async () => await ChooseFilter());
+        RefreshCommand = new Command(async () =>
+        {
+            IsRefreshing = true;
+            await LoadAsync();
+            IsRefreshing = false;
+        });
     }
 
     /// <summary>Reads the items from SQLite.</summary>

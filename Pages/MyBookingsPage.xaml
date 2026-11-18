@@ -4,8 +4,9 @@
              Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
     <Grid RowDefinitions="Auto,*,Auto">
         <c:AppBar Title="My bookings"/>
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="16" Spacing="12">
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}" RefreshColor="{StaticResource Teal}">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="12">
                 <!-- Return Reminder Alert Banner -->
                 <Border BackgroundColor="#FFF0F5" Stroke="{StaticResource Pink}" StrokeThickness="1.2"
                         StrokeShape="RoundRectangle 8" Padding="12,10" IsVisible="{Binding HasUrgentBanner}">
@@ -59,6 +60,7 @@
                 <Label Text="Tap a booking to start handover" Style="{StaticResource LblMuted}" Margin="0,4,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
+        </RefreshView>
         <c:BottomNav Grid.Row="2" Active="1"/>
     </Grid>
 </ContentPage>

@@ -5,8 +5,9 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <c:AppBar Title="Catalog" TrailingIcon="ic_filter.png" TrailingTapped="OnFilter"/>
         <Grid Grid.Row="1">
-            <ScrollView>
-                <VerticalStackLayout Padding="16,16,16,96" Spacing="12">
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}" RefreshColor="{StaticResource Teal}">
+                <ScrollView>
+                    <VerticalStackLayout Padding="16,16,16,96" Spacing="12">
                     <Border Style="{StaticResource Field}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                             <Image Source="ic_search.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
@@ -114,6 +115,7 @@
 
                 </VerticalStackLayout>
             </ScrollView>
+            </RefreshView>
             <!-- Floating action button -> Add Listing -->
             <Border WidthRequest="52" HeightRequest="52" StrokeShape="RoundRectangle 26" StrokeThickness="0" BackgroundColor="{StaticResource Navy}"
                     HorizontalOptions="End" VerticalOptions="End" Margin="0,0,18,18" Shadow="{StaticResource SoftShadow}" Padding="0">

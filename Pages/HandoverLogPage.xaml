@@ -21,6 +21,19 @@
                     </Grid>
                 </Border>
 
+                <!-- Quick Condition Chips -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="QUICK CONDITION SELECT" Style="{StaticResource LblCaption}"/>
+                    <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignItems="Center">
+                        <Button x:Name="ChipGood" Text="✓ Good &amp; Clean" Style="{StaticResource Chip}" Margin="0,0,6,6"
+                                Clicked="OnChipGoodClicked"/>
+                        <Button x:Name="ChipMarks" Text="⚠️ Minor Marks" Style="{StaticResource Chip}" Margin="0,0,6,6"
+                                Clicked="OnChipMarksClicked"/>
+                        <Button x:Name="ChipDamaged" Text="❌ Damaged / Needs Attention" Style="{StaticResource Chip}" Margin="0,0,6,6"
+                                Clicked="OnChipDamagedClicked"/>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
                 <!-- Note entry -->
                 <Border Style="{StaticResource Field}"><Entry x:Name="NoteEntry" Placeholder="Condition note (e.g. good condition, clean)"/></Border>
 

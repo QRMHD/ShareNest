@@ -24,6 +24,10 @@ public class BookingsViewModel : BaseViewModel
     public ObservableCollection<BookingGroup> Groups { get; } = new();
     public ICommand ShowBorrowingCommand { get; }
     public ICommand ShowLendingCommand { get; }
+    public ICommand RefreshCommand { get; }
+
+    bool _isRefreshing;
+    public bool IsRefreshing { get => _isRefreshing; set => Set(ref _isRefreshing, value); }
 
     public bool IsEmpty { get => _isEmpty; private set => Set(ref _isEmpty, value); }
     public string? UrgentBannerText { get => _urgentBannerText; private set { if (Set(ref _urgentBannerText, value)) Raise(nameof(HasUrgentBanner)); } }
@@ -38,6 +42,12 @@ public class BookingsViewModel : BaseViewModel
     {
         ShowBorrowingCommand = new Command(async () => await Switch(false));
         ShowLendingCommand = new Command(async () => await Switch(true));
+        RefreshCommand = new Command(async () =>
+        {
+            IsRefreshing = true;
+            await LoadAsync();
+            IsRefreshing = false;
+        });
     }
 
     public async Task LoadAsync()
