@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.CatalogPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models" xmlns:vm="clr-namespace:ShareNest.ViewModels"
+             x:DataType="vm:CatalogViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:AppBar Title="Catalog" TrailingIcon="ic_filter.png" TrailingTapped="OnFilter"/>
+        <Grid Grid.Row="1">
+            <ScrollView>
+                <VerticalStackLayout Padding="16,16,16,96" Spacing="12">
+                    <Border Style="{StaticResource Field}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                            <Image Source="ic_search.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Text="{Binding SearchText}" Placeholder="Search tools, equipment, gear..."/>
+                        </Grid>
+                    </Border>
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="0,6,0,0">
+                        <HorizontalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Chips}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:ChipItem">
+                                    <Button Text="{Binding Name}" Command="{Binding Command}" Style="{StaticResource Chip}"
+                                            BackgroundColor="{Binding Background}" TextColor="{Binding Foreground}"/>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                    <Label Text="{Binding CountText}" Style="{StaticResource LblMuted}"/>
+
+                    <!-- Empty state for no search results -->
+                    <VerticalStackLayout IsVisible="{Binding HasNoResults}" Spacing="8" HorizontalOptions="Center" Margin="0,40,0,0">
+                        <Label Text="🔍" FontSize="36" HorizontalOptions="Center"/>
+                        <Label Text="No items found" Style="{StaticResource LblBold}" FontSize="16" HorizontalOptions="Center"/>
+                        <Label Text="Try different search keywords or select another category." Style="{StaticResource LblMuted}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Section 1: My Listings (Distinct & Separated) -->
+                    <VerticalStackLayout IsVisible="{Binding HasMyItems}" Spacing="8" Margin="0,4,0,8">
+                        <Grid ColumnDefinitions="*,Auto" Margin="2,0,2,2">
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Label Text="📦" FontSize="13" VerticalOptions="Center"/>
+                                <Label Text="{Binding MyItemsTitle}" Style="{StaticResource LblCaption}" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="#E6F4F1" Padding="8,3" StrokeThickness="0" StrokeShape="RoundRectangle 8" VerticalOptions="Center">
+                                <Label Text="Managed by you" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TealText}"/>
+                            </Border>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding MyItems}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="m:Item">
+                                    <Border Style="{StaticResource Card}" BackgroundColor="#F8FBFD" Stroke="{StaticResource Teal}" StrokeThickness="1.2">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnItemTapped"/></Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                            <Border WidthRequest="56" HeightRequest="56" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 8">
+                                                <Image Source="{Binding ThumbnailSource}" Aspect="{Binding ThumbnailAspect}" WidthRequest="56" HeightRequest="56" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{Binding Name}" Style="{StaticResource LblBold}"/>
+                                                <Label Text="{Binding DepositText}" Style="{StaticResource LblMuted}"/>
+                                                <Label Text="{Binding Summary}" Style="{StaticResource LblHelper}"/>
+                                            </VerticalStackLayout>
+                                            <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="4" HorizontalOptions="End">
+                                                <Border BackgroundColor="{StaticResource Teal}" Padding="8,2" StrokeThickness="0" StrokeShape="RoundRectangle 10" HorizontalOptions="End">
+                                                    <Label Text="Your Item" FontSize="10.5" FontAttributes="Bold" TextColor="White"/>
+                                                </Border>
+                                                <Border BackgroundColor="White" Padding="8,2" Stroke="{Binding StatusBrush}" StrokeThickness="1" StrokeShape="RoundRectangle 10" HorizontalOptions="End">
+                                                    <Label Text="{Binding StatusText}" FontSize="11" FontAttributes="Bold" TextColor="{Binding StatusTextColor}"/>
+                                                </Border>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Section 2: Community Equipment -->
+                    <VerticalStackLayout IsVisible="{Binding HasCommunityItems}" Spacing="8" Margin="0,6,0,0">
+                        <Grid ColumnDefinitions="*,Auto" Margin="2,0,2,2">
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Label Text="🤝" FontSize="13" VerticalOptions="Center"/>
+                                <Label Text="{Binding CommunityItemsTitle}" Style="{StaticResource LblCaption}" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="Available from neighbors" FontSize="11" TextColor="{StaticResource MutedText}" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding CommunityItems}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="m:Item">
+                                    <Border Style="{StaticResource Card}">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnItemTapped"/></Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                            <Border WidthRequest="56" HeightRequest="56" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 8">
+                                                <Image Source="{Binding ThumbnailSource}" Aspect="{Binding ThumbnailAspect}" WidthRequest="56" HeightRequest="56" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{Binding Name}" Style="{StaticResource LblBold}"/>
+                                                <HorizontalStackLayout Spacing="6">
+                                                    <Label Text="{Binding DepositText}" Style="{StaticResource LblMuted}"/>
+                                                    <Label Text="•" Style="{StaticResource LblMuted}"/>
+                                                    <Label Text="{Binding OwnerSubtitle}" Style="{StaticResource LblMuted}" TextColor="{StaticResource Navy}"/>
+                                                </HorizontalStackLayout>
+                                                <Label Text="{Binding Summary}" Style="{StaticResource LblHelper}"/>
+                                            </VerticalStackLayout>
+                                            <Border Grid.Column="2" VerticalOptions="Center" BackgroundColor="White" Padding="10,3"
+                                                    Stroke="{Binding StatusBrush}" StrokeThickness="1.2" StrokeShape="RoundRectangle 12">
+                                                <Label Text="{Binding StatusText}" FontSize="13" FontAttributes="Bold" TextColor="{Binding StatusTextColor}"/>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+            <!-- Floating action button -> Add Listing -->
+            <Border WidthRequest="52" HeightRequest="52" StrokeShape="RoundRectangle 26" StrokeThickness="0" BackgroundColor="{StaticResource Navy}"
+                    HorizontalOptions="End" VerticalOptions="End" Margin="0,0,18,18" Shadow="{StaticResource SoftShadow}" Padding="0">
+                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAdd"/></Border.GestureRecognizers>
+                <Label Text="+" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+        <c:BottomNav Grid.Row="2" Active="0"/>
+    </Grid>
+</ContentPage>

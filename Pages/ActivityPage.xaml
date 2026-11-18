@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.ActivityPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models" xmlns:vm="clr-namespace:ShareNest.ViewModels"
+             x:DataType="vm:ActivityViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="RowTemplate" x:DataType="vm:ActivityRow">
+            <Border Style="{StaticResource Card}">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border WidthRequest="40" HeightRequest="40" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 8">
+                        <Image Source="{Binding IconFile}" WidthRequest="22" HeightRequest="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Label Grid.Column="1" Text="{Binding Text}" Style="{StaticResource LblBold}" VerticalOptions="Center"/>
+                    <Border Grid.Column="2" IsVisible="{Binding HasTag}" VerticalOptions="Center" BackgroundColor="White" Padding="10,3"
+                            Stroke="{StaticResource Teal}" StrokeThickness="1.2" StrokeShape="RoundRectangle 12">
+                        <Label Text="{Binding Tag}" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TealText}"/>
+                    </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:AppBar Title="My activity" TrailingIcon="box"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                    <Border Style="{StaticResource Card}"><VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding ActiveCount}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Navy}"/><Label Text="Active" Style="{StaticResource LblMuted}"/></VerticalStackLayout></Border>
+                    <Border Grid.Column="1" Style="{StaticResource Card}"><VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding LentCount}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Navy}"/><Label Text="Lent out" Style="{StaticResource LblMuted}"/></VerticalStackLayout></Border>
+                    <Border Grid.Row="1" Style="{StaticResource Card}"><VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding DueCount}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Navy}"/><Label Text="Due soon" Style="{StaticResource LblMuted}"/></VerticalStackLayout></Border>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Card}"><VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding TotalCount}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Navy}"/><Label Text="Total loans" Style="{StaticResource LblMuted}"/></VerticalStackLayout></Border>
+                </Grid>
+
+                <Label Text="This week vs last week: +12% borrows" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource PinkText}"/>
+
+                <Border Style="{StaticResource Panel}" Padding="14,12,14,14">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="BORROWING ACTIVITY THIS MONTH" Style="{StaticResource LblCaption}"/>
+                        <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="6" HeightRequest="84">
+                            <!-- W1 -->
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="End" HorizontalOptions="Center" Spacing="4">
+                                <BoxView Color="{StaticResource Teal}" WidthRequest="22" HeightRequest="30" CornerRadius="4" HorizontalOptions="Center"/>
+                                <Label Text="W1" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource MutedText}" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <!-- W2 -->
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Spacing="4">
+                                <BoxView Color="{StaticResource Teal}" WidthRequest="22" HeightRequest="48" CornerRadius="4" HorizontalOptions="Center"/>
+                                <Label Text="W2" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource MutedText}" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <!-- W3 -->
+                            <VerticalStackLayout Grid.Column="2" VerticalOptions="End" HorizontalOptions="Center" Spacing="4">
+                                <BoxView Color="{StaticResource Teal}" WidthRequest="22" HeightRequest="22" CornerRadius="4" HorizontalOptions="Center"/>
+                                <Label Text="W3" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource MutedText}" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <!-- W4 -->
+                            <VerticalStackLayout Grid.Column="3" VerticalOptions="End" HorizontalOptions="Center" Spacing="4">
+                                <BoxView Color="{StaticResource Teal}" WidthRequest="22" HeightRequest="58" CornerRadius="4" HorizontalOptions="Center"/>
+                                <Label Text="W4" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource MutedText}" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <!-- W5 -->
+                            <VerticalStackLayout Grid.Column="4" VerticalOptions="End" HorizontalOptions="Center" Spacing="4">
+                                <BoxView Color="{StaticResource Teal}" WidthRequest="22" HeightRequest="38" CornerRadius="4" HorizontalOptions="Center"/>
+                                <Label Text="W5" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource MutedText}" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout Spacing="10" Margin="0,8,0,0"
+                                     BindableLayout.ItemsSource="{Binding Upcoming}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}"/>
+                <VerticalStackLayout Spacing="10"
+                                     BindableLayout.ItemsSource="{Binding History}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <c:BottomNav Grid.Row="2" Active="2"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.AddListingPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models" xmlns:vm="clr-namespace:ShareNest.ViewModels"
+             x:DataType="vm:AddListingViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*">
+        <c:AppBar Title="List an item" ShowBack="True"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,14,16,28" Spacing="14">
+
+                <VerticalStackLayout Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Photos" Style="{StaticResource LblBold}" FontSize="13"/>
+                        <Label Grid.Column="1" Text="Add 1–4 clear photos" Style="{StaticResource LblHelper}"/>
+                    </Grid>
+                    <Border Stroke="{StaticResource Teal}" StrokeThickness="1.4" StrokeDashArray="4,3" StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="14,16">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding UploadCommand}"/></Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                            <Image Source="ic_camera.png" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center"/>
+                            <Label Text="Upload photos" Style="{StaticResource LblBold}" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="Show the item from different angles and include any labels or wear." Style="{StaticResource LblHelper}" HorizontalTextAlignment="Center"/>
+                            <Border BackgroundColor="{StaticResource SoftPanel}" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="12,4" HorizontalOptions="Center" Margin="0,4,0,0">
+                                <Label Text="JPG or PNG, up to 10 MB" Style="{StaticResource LblHelper}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                    <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Photos}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Border WidthRequest="64" HeightRequest="64" Padding="0" StrokeThickness="1" Stroke="{StaticResource LineGrey}" StrokeShape="RoundRectangle 8">
+                                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnThumbTapped"/></Border.GestureRecognizers>
+                                    <Image Source="{Binding .}" Aspect="AspectFill"/>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Item name" Style="{StaticResource LblCaption}"/>
+                    <Border Style="{StaticResource Field}"><Entry Text="{Binding Name}" Placeholder="e.g. Bosch cordless drill"/></Border>
+                    <Label Text="Use the brand and model if you know it." Style="{StaticResource LblHelper}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Category" Style="{StaticResource LblCaption}"/>
+                    <Border Style="{StaticResource Field}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding CategoryCommand}"/></Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding CategoryText}" TextColor="{Binding CategoryColor}" FontSize="13" VerticalOptions="Center"/>
+                            <Image Grid.Column="1" Source="ic_chevron_down.png" WidthRequest="16" HeightRequest="16" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                    <Label Text="Pick the category that best matches the item." Style="{StaticResource LblHelper}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Description &amp; usage rules" Style="{StaticResource LblCaption}"/>
+                    <Border Style="{StaticResource Field}"><Entry Text="{Binding Description}" Placeholder="Add details, condition notes and any usage rules."/></Border>
+                    <Label Text="Mention batteries, chargers, cleaning needs and any fragile parts." Style="{StaticResource LblHelper}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Deposit amount (RM)" Style="{StaticResource LblCaption}"/>
+                    <Border Style="{StaticResource Field}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry Text="{Binding DepositText}" Placeholder="Enter deposit amount" Keyboard="Numeric"/>
+                            <Label Grid.Column="1" Text="RM" Style="{StaticResource LblBold}" FontSize="13" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                    <Label Text="Set a deposit that reflects the item’s value and condition." Style="{StaticResource LblHelper}"/>
+                </VerticalStackLayout>
+
+                
+                
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Tags" Style="{StaticResource LblCaption}"/>
+                    <Border Style="{StaticResource Field}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry Text="{Binding Tags}" Placeholder="e.g. power tool, garden, heavy"/>
+                            <Image Grid.Column="1" Source="ic_tag.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                    <Label Text="Add tags that help neighbours find the item quickly." Style="{StaticResource LblHelper}"/>
+                </VerticalStackLayout>
+
+                <Label Text="{Binding ErrorText}" IsVisible="{Binding HasError}" TextColor="{StaticResource PinkText}" FontSize="13" FontAttributes="Bold"/>
+                <Button Text="Preview listing" Style="{StaticResource BtnOutline}" Command="{Binding PreviewCommand}"/>
+                <Button Text="Publish listing" Style="{StaticResource BtnPrimary}" Command="{Binding PublishCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

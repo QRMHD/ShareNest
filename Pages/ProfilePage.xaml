@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.ProfilePage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models" xmlns:vm="clr-namespace:ShareNest.ViewModels"
+             x:DataType="vm:ProfileViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:AppBar Title="Profile"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center" Margin="0,4,0,6">
+                    <Border WidthRequest="64" HeightRequest="64" Padding="0" StrokeShape="RoundRectangle 32" Stroke="{StaticResource Navy}" StrokeThickness="1.6" BackgroundColor="White" HorizontalOptions="Center">
+                        <Image Source="avatar_amir.png" Aspect="AspectFill"/>
+                    </Border>
+                    <Label Text="{Binding FullName}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center" Margin="0,4,0,0"/>
+                    <Label Text="Trust score: 4.8 ★" Style="{StaticResource LblMuted}" HorizontalOptions="Center"/>
+                    <Label Text="{Binding EmailLine}" Style="{StaticResource LblMuted}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <Border Style="{StaticResource Card}" Padding="12,10">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnListings"/></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border WidthRequest="32" HeightRequest="32" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 6">
+                            <Image Source="ic_listings.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                        <Label Grid.Column="1" Text="{Binding ListingsText}" Style="{StaticResource LblBold}" VerticalOptions="Center"/>
+                        <Border Grid.Column="2" VerticalOptions="Center" BackgroundColor="White" Padding="10,3" Stroke="{StaticResource Teal}" StrokeThickness="1.2" StrokeShape="RoundRectangle 12">
+                            <Label Text="View" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TealText}"/></Border>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="12,10">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnPaymentHistory"/></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border WidthRequest="32" HeightRequest="32" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 6">
+                            <Label Text="💳" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Grid.Column="1" Text="Payment &amp; escrow history" Style="{StaticResource LblBold}" VerticalOptions="Center"/>
+                        <Border Grid.Column="2" VerticalOptions="Center" BackgroundColor="White" Padding="10,3" Stroke="{StaticResource Teal}" StrokeThickness="1.2" StrokeShape="RoundRectangle 12">
+                            <Label Text="View" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TealText}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="12,10">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnSignOut"/></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="32" HeightRequest="32" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 6">
+                            <Image Source="ic_logout.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                        <Label Grid.Column="1" Text="Sign out" Style="{StaticResource LblBold}" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="12,10">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnSettings"/></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="32" HeightRequest="32" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 6">
+                            <Image Source="ic_settings.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                        <Label Grid.Column="1" Text="Settings &amp; notifications" Style="{StaticResource LblBold}" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}" Padding="12,10">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAbout"/></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="32" HeightRequest="32" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 6">
+                            <Image Source="ic_info.png" WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                        <Label Grid.Column="1" Text="About ShareNest" Style="{StaticResource LblBold}" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <c:BottomNav Grid.Row="2" Active="3"/>
+    </Grid>
+</ContentPage>

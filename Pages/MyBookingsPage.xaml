@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.MyBookingsPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models" xmlns:vm="clr-namespace:ShareNest.ViewModels"
+             x:DataType="vm:BookingsViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:AppBar Title="My bookings"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <!-- Return Reminder Alert Banner -->
+                <Border BackgroundColor="#FFF0F5" Stroke="{StaticResource Pink}" StrokeThickness="1.2"
+                        StrokeShape="RoundRectangle 8" Padding="12,10" IsVisible="{Binding HasUrgentBanner}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalOptions="Center">
+                        <Label Text="🔔" FontSize="18" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding UrgentBannerText}" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource PinkText}" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <HorizontalStackLayout Spacing="6">
+                    <Button Text="Borrowing" Style="{StaticResource Chip}" Command="{Binding ShowBorrowingCommand}"
+                            BackgroundColor="{Binding BorrowBg}" TextColor="{Binding BorrowFg}"/>
+                    <Button Text="Lending" Style="{StaticResource Chip}" Command="{Binding ShowLendingCommand}"
+                            BackgroundColor="{Binding LendBg}" TextColor="{Binding LendFg}"/>
+                </HorizontalStackLayout>
+                <VerticalStackLayout Spacing="20" Margin="0,6,0,0" BindableLayout.ItemsSource="{Binding Groups}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:BookingGroup">
+                            <VerticalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 6" BackgroundColor="{Binding Accent}" VerticalOptions="Center"/>
+                                    <Label Text="{Binding HeaderText}" Style="{StaticResource LblBold}" FontSize="18"/>
+                                </HorizontalStackLayout>
+                                <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Items}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="m:Booking">
+                                            <Border Style="{StaticResource Card}">
+                                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBookingTapped"/></Border.GestureRecognizers>
+                                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                                    <Border WidthRequest="46" HeightRequest="46" Padding="0" BackgroundColor="White" Stroke="{StaticResource LineGrey}" StrokeThickness="1.4" StrokeShape="RoundRectangle 8">
+                                                        <Image Source="{Binding IconFile}" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                    </Border>
+                                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                                        <Label Text="{Binding ItemName}" Style="{StaticResource LblBold}"/>
+                                                        <Label Text="{Binding ReminderText}" FontSize="12.5" FontAttributes="Bold" TextColor="{Binding ReminderColor}"/>
+                                                        <Label Text="{Binding Detail}" Style="{StaticResource LblMuted}" FontSize="12"/>
+                                                    </VerticalStackLayout>
+                                                    <Border Grid.Column="2" VerticalOptions="Center" BackgroundColor="White" Padding="10,4" Stroke="{Binding StatusBrush}" StrokeThickness="1.4" StrokeShape="RoundRectangle 14">
+                                                        <Label Text="{Binding StatusText}" FontSize="13" FontAttributes="Bold" TextColor="{Binding StatusColor}"/>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Label Text="Nothing here yet." Style="{StaticResource LblMuted}" HorizontalOptions="Center" IsVisible="{Binding IsEmpty}"/>
+                <Label Text="Tap a booking to start handover" Style="{StaticResource LblMuted}" Margin="0,4,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <c:BottomNav Grid.Row="2" Active="1"/>
+    </Grid>
+</ContentPage>

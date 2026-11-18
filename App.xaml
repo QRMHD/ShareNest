@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application x:Class="ShareNest.App"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Palette from the Figma design -->
+            <Color x:Key="Navy">#364F6B</Color>
+            <Color x:Key="Teal">#3FC1C9</Color>
+            <Color x:Key="Pink">#FC5185</Color>
+            <Color x:Key="PageGrey">#F5F5F5</Color>
+            <Color x:Key="SoftPanel">#E3EDEA</Color>
+            <Color x:Key="LineGrey">#98A8A3</Color>
+            <!-- Darker shades used for TEXT so it is easy to read on white / light panels -->
+            <Color x:Key="TealText">#0F6F78</Color>
+            <Color x:Key="TealDark">#178C95</Color>
+            <Color x:Key="PinkText">#C8285F</Color>
+            <Color x:Key="MutedText">#3F514D</Color>
+            <Color x:Key="SubtleText">#55655F</Color>
+
+            <Shadow x:Key="SoftShadow" Brush="#364F6B" Opacity="0.14" Radius="6" Offset="0,2"/>
+
+            <!-- Labels (larger sizes, darker colours) -->
+            <Style x:Key="LblBody" TargetType="Label"><Setter Property="FontSize" Value="14"/><Setter Property="TextColor" Value="{StaticResource Navy}"/></Style>
+            <Style x:Key="LblBold" TargetType="Label" BasedOn="{StaticResource LblBody}"><Setter Property="FontAttributes" Value="Bold"/></Style>
+            <Style x:Key="LblCaption" TargetType="Label"><Setter Property="FontSize" Value="12"/><Setter Property="FontAttributes" Value="Bold"/><Setter Property="TextColor" Value="{StaticResource MutedText}"/></Style>
+            <Style x:Key="LblMuted" TargetType="Label"><Setter Property="FontSize" Value="13"/><Setter Property="TextColor" Value="{StaticResource SubtleText}"/></Style>
+            <Style x:Key="LblHelper" TargetType="Label"><Setter Property="FontSize" Value="13"/><Setter Property="TextColor" Value="{StaticResource MutedText}"/></Style>
+
+            <!-- Cards / panels / fields -->
+            <Style x:Key="Card" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="White"/><Setter Property="Stroke" Value="{StaticResource LineGrey}"/>
+                <Setter Property="StrokeThickness" Value="1"/><Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+                <Setter Property="Padding" Value="14"/><Setter Property="Shadow" Value="{StaticResource SoftShadow}"/>
+            </Style>
+            <Style x:Key="Panel" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource SoftPanel}"/><Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 8"/><Setter Property="Padding" Value="14"/>
+                <Setter Property="Shadow" Value="{StaticResource SoftShadow}"/>
+            </Style>
+            <Style x:Key="Field" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="White"/><Setter Property="Stroke" Value="{StaticResource LineGrey}"/>
+                <Setter Property="StrokeThickness" Value="1.2"/><Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+                <Setter Property="Padding" Value="12,0"/><Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="Shadow" Value="{StaticResource SoftShadow}"/>
+            </Style>
+            <Style TargetType="Entry"><Setter Property="FontSize" Value="14"/><Setter Property="TextColor" Value="{StaticResource Navy}"/><Setter Property="PlaceholderColor" Value="{StaticResource SubtleText}"/><Setter Property="BackgroundColor" Value="Transparent"/><Setter Property="VerticalOptions" Value="Center"/></Style>
+            <Style TargetType="Editor"><Setter Property="FontSize" Value="14"/><Setter Property="TextColor" Value="{StaticResource Navy}"/><Setter Property="PlaceholderColor" Value="{StaticResource SubtleText}"/><Setter Property="BackgroundColor" Value="Transparent"/></Style>
+
+            <!-- Buttons -->
+            <Style x:Key="BtnPrimary" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource Navy}"/><Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="15"/><Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="8"/><Setter Property="HeightRequest" Value="50"/>
+            </Style>
+            <Style x:Key="BtnOutline" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White"/><Setter Property="TextColor" Value="{StaticResource Navy}"/>
+                <Setter Property="BorderColor" Value="{StaticResource Navy}"/><Setter Property="BorderWidth" Value="1.5"/>
+                <Setter Property="FontSize" Value="15"/><Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="8"/><Setter Property="HeightRequest" Value="50"/>
+            </Style>
+            <Style x:Key="Chip" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent"/><Setter Property="TextColor" Value="{StaticResource Navy}"/>
+                <Setter Property="BorderColor" Value="{StaticResource Navy}"/><Setter Property="BorderWidth" Value="1.4"/>
+                <Setter Property="FontSize" Value="14"/><Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="18"/><Setter Property="HeightRequest" Value="36"/>
+                <Setter Property="Padding" Value="16,0"/><Setter Property="MinimumWidthRequest" Value="0"/>
+            </Style>
+            <Style x:Key="ChipOn" TargetType="Button" BasedOn="{StaticResource Chip}">
+                <Setter Property="BackgroundColor" Value="{StaticResource Navy}"/><Setter Property="TextColor" Value="White"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

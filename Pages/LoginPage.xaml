@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.LoginPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models" xmlns:vm="clr-namespace:ShareNest.ViewModels"
+             x:DataType="vm:LoginViewModel"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*">
+        <!-- Top back navigation -->
+        <Grid Padding="16,14" ColumnDefinitions="Auto,*">
+            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped"/></HorizontalStackLayout.GestureRecognizers>
+                <Label Text="‹" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Navy}" VerticalOptions="Center"/>
+                <Label Text="Back to Catalog" Style="{StaticResource LblBold}" TextColor="{StaticResource Navy}" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <ScrollView Grid.Row="1" VerticalOptions="Center">
+            <VerticalStackLayout Padding="20,0,20,24" Spacing="14" VerticalOptions="Center">
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center" Margin="0,0,0,8">
+                    <Image Source="app_logo.png" WidthRequest="64" HeightRequest="64" HorizontalOptions="Center"/>
+                    <Label Text="Welcome to ShareNest" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center"/>
+                    <Label Text="Borrow more, buy less with your community" Style="{StaticResource LblMuted}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <Border Style="{StaticResource Field}" IsVisible="{Binding IsRegister}"><Entry Text="{Binding FullName}" Placeholder="Full name"/></Border>
+                <Border Style="{StaticResource Field}"><Entry Text="{Binding Email}" Placeholder="Email address" Keyboard="Email"/></Border>
+                <Border Style="{StaticResource Field}"><Entry Text="{Binding Password}" Placeholder="Password" IsPassword="True"/></Border>
+                
+                <Label Text="{Binding ErrorText}" IsVisible="{Binding HasError}" TextColor="{StaticResource PinkText}" FontSize="13" FontAttributes="Bold"/>
+                
+                <Button Text="{Binding SubmitText}" Style="{StaticResource BtnPrimary}" Command="{Binding SubmitCommand}"/>
+                
+                <Label Text="Forgot password?" IsVisible="{Binding ShowForgot}" Style="{StaticResource LblMuted}" HorizontalOptions="Center" Margin="0,6,0,0">
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding ForgotCommand}"/></Label.GestureRecognizers></Label>
+                
+                <Label Text="{Binding SwitchText}" FontSize="13.5" FontAttributes="Bold" TextColor="{StaticResource TealText}" HorizontalOptions="Center" Margin="0,4,0,0">
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding SwitchCommand}"/></Label.GestureRecognizers></Label>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

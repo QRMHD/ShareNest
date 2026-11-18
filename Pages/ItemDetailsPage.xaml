@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.ItemDetailsPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*">
+        <c:AppBar Title="Item details" ShowBack="True"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Border HeightRequest="170" Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource SoftPanel}">
+                    <Grid>
+                        <Image x:Name="Photo" Aspect="AspectFill"/>
+                        <Image x:Name="BigIcon" WidthRequest="64" HeightRequest="64" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False"/>
+                        <Border Margin="10" HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="White" Padding="10,3"
+                                Stroke="{StaticResource Navy}" StrokeThickness="1.4" StrokeShape="RoundRectangle 12">
+                            <Label Text="Verified" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource Navy}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Border WidthRequest="36" HeightRequest="36" Padding="0" StrokeShape="RoundRectangle 18" Stroke="{StaticResource Navy}" StrokeThickness="1" BackgroundColor="{StaticResource SoftPanel}">
+                        <Grid>
+                            <Image x:Name="Avatar" Source="avatar_amir.png" Aspect="AspectFill"/>
+                            <Label x:Name="Initial" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" TextColor="{StaticResource Navy}"/>
+                        </Grid>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                        <Label x:Name="OwnerLbl" Style="{StaticResource LblBold}"/>
+                        <Label x:Name="OwnerStatsLbl" Style="{StaticResource LblMuted}"/>
+                    </VerticalStackLayout>
+                </Grid>
+                <Border Style="{StaticResource Panel}"><VerticalStackLayout Spacing="3">
+                    <Label x:Name="NameLbl" Style="{StaticResource LblCaption}"/><Label x:Name="StatusLbl" Style="{StaticResource LblBody}"/></VerticalStackLayout></Border>
+                <Border Style="{StaticResource Panel}"><VerticalStackLayout Spacing="3">
+                    <Label Text="SPECS &amp; USAGE RULES" Style="{StaticResource LblCaption}"/><Label x:Name="SpecLbl" Style="{StaticResource LblBody}"/></VerticalStackLayout></Border>
+                <Border Style="{StaticResource Panel}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="REFUNDABLE SECURITY DEPOSIT" Style="{StaticResource LblCaption}"/>
+                        <HorizontalStackLayout Spacing="8">
+                            <Label x:Name="DepositLbl" Style="{StaticResource LblBold}" FontSize="16"/>
+                            <Border BackgroundColor="White" Padding="8,2" Stroke="{StaticResource Teal}" StrokeThickness="1" StrokeShape="RoundRectangle 10" VerticalOptions="Center">
+                                <Label Text="100% Refundable" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TealText}"/>
+                            </Border>
+                        </HorizontalStackLayout>
+                        <Label Text="Free community borrowing · Deposit is returned upon safe item handover." Style="{StaticResource LblHelper}" FontSize="12"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Panel}"><VerticalStackLayout Spacing="3">
+                    <Label Text="AVAILABILITY" Style="{StaticResource LblCaption}"/><Label x:Name="AvailLbl" Style="{StaticResource LblBody}"/></VerticalStackLayout></Border>
+                <Button x:Name="MessageBtn" Style="{StaticResource BtnOutline}" Clicked="OnMessage"/>
+                <Button x:Name="ReserveBtn" Text="Reserve this item" Style="{StaticResource BtnPrimary}" Clicked="OnReserve"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

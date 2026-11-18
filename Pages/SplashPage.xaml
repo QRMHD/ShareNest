@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.SplashPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+        <Image Source="app_logo.png" WidthRequest="84" HeightRequest="84" HorizontalOptions="Center"/>
+        <Label Text="ShareNest" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center" Margin="0,8,0,0"/>
+        <Label Text="Borrow more, buy less" Style="{StaticResource LblMuted}" HorizontalOptions="Center"/>
+        <Grid WidthRequest="120" HeightRequest="6" Margin="0,36,0,0">
+            <BoxView Color="{StaticResource LineGrey}" CornerRadius="3"/>
+            <BoxView x:Name="Fill" Color="{StaticResource Teal}" CornerRadius="3" HorizontalOptions="Start" WidthRequest="0"/>
+        </Grid>
+        <Label Text="v1.0" Style="{StaticResource LblMuted}" HorizontalOptions="Center" Margin="0,6,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>

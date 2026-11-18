@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.ReceiptPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:ShareNest.Controls"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource PageGrey}">
+
+    <Grid RowDefinitions="Auto,*">
+        <c:AppBar Title="Payment Receipt" ShowBack="False"/>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <!-- Success Header -->
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center" Margin="0,10,0,4">
+                    <Border WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 32"
+                            BackgroundColor="#E8F8F5" Stroke="{StaticResource Teal}" StrokeThickness="2"
+                            HorizontalOptions="Center">
+                        <Label Text="✓" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource TealText}"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Label Text="Payment Authorized!" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center"/>
+                    <Label Text="Security deposit locked safely in Escrow" FontSize="13" TextColor="{StaticResource SubtleText}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Official ShareNest E-Receipt Card -->
+                <Border Style="{StaticResource Card}" Padding="18,16">
+                    <VerticalStackLayout Spacing="10">
+                        <!-- Receipt Top Brand -->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="SHARENEST COMMUNITY ESCROW" Style="{StaticResource LblCaption}" TextColor="{StaticResource TealDark}"/>
+                                <Label Text="Official Electronic Receipt" FontSize="11" TextColor="{StaticResource SubtleText}"/>
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="#E3EDEA" StrokeShape="RoundRectangle 6" Padding="8,3">
+                                <Label x:Name="ReceiptBadgeLbl" Text="🔒 HELD IN ESCROW" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource Navy}"/>
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource LineGrey}" Margin="0,2"/>
+
+                        <!-- Details Rows -->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Receipt Number" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="ReceiptNoLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Transaction Reference" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="TxnRefLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Date &amp; Time" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="DateTimeLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Payment Channel" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="MethodLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12" TextColor="{StaticResource TealText}"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource LineGrey}" Margin="0,2"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Equipment Item" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="ItemNameLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Booking Period" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="DatesLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Community Lending Fee" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label Text="RM 0.00 (Free)" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12" TextColor="{StaticResource TealText}"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Refundable Deposit" Style="{StaticResource LblMuted}" FontSize="12"/>
+                            <Label x:Name="DepositLbl" Grid.Column="1" Style="{StaticResource LblBold}" FontSize="12"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource LineGrey}" Margin="0,2"/>
+
+                        <!-- Total Row -->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Total Paid Now" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Navy}"/>
+                            <Label x:Name="TotalPaidLbl" Grid.Column="1" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Navy}"/>
+                        </Grid>
+
+                        <!-- Escrow Guarantee Box -->
+                        <Border BackgroundColor="#F0FAF9" Stroke="{StaticResource Teal}" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="10" Margin="0,4,0,0">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="✓ 100% Escrow Protection Guaranteed" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource TealText}"/>
+                                <Label Text="This deposit is safely isolated in escrow. It will be refunded directly to your original payment method once the item is returned in good order."
+                                       FontSize="10.5" TextColor="{StaticResource MutedText}" LineHeight="1.25"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Action Buttons -->
+                <VerticalStackLayout Spacing="10" Margin="0,4,0,16">
+                    <Button Text="View Escrow Status &amp; Timeline" Style="{StaticResource BtnPrimary}" Clicked="OnViewEscrowTimeline"/>
+                    <Button Text="Done (Return to My Bookings)" Style="{StaticResource BtnOutline}" Clicked="OnDoneToBookings"/>
+                    <Button Text="📄 Save / Share Receipt" Style="{StaticResource Chip}" Clicked="OnShareReceipt"/>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

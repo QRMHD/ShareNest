@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ShareNest.Pages.AboutPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:c="clr-namespace:ShareNest.Controls" xmlns:m="clr-namespace:ShareNest.Models"
+             Shell.NavBarIsVisible="False" BackgroundColor="{StaticResource PageGrey}">
+    <Grid RowDefinitions="Auto,*">
+        <c:AppBar Title="About ShareNest" ShowBack="True"/>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="14">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center" Margin="0,4,0,6">
+                    <Image Source="app_logo.png" WidthRequest="64" HeightRequest="64" HorizontalOptions="Center"/>
+                    <Label Text="ShareNest" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center"/>
+                    <Label Text="Smart Community Asset Sharing · v1.0" Style="{StaticResource LblMuted}" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Complete Application Description (Milestone 2 & Rubric) -->
+                <Border Style="{StaticResource Panel}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="APPLICATION DESCRIPTION" Style="{StaticResource LblCaption}"/>
+                        <Label Text="Theme: Smart Community and Digital Innovation" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TealText}"/>
+                        <Label Text="ShareNest is a smart community asset-sharing platform designed for residential neighborhoods and apartment complexes. It digitally connects neighbors who need to borrow household tools and equipment with residents who are willing to share unused items. Instead of relying on unorganized messaging groups, ShareNest provides a structured community catalog, real-time availability, digital booking, condition records, and deposit tracking. By using digital tools to coordinate the sharing of underused resources, the application encourages collaboration within the community, reduces unnecessary purchases, and makes shared assets easier and safer to manage."
+                               Style="{StaticResource LblBody}" LineHeight="1.25"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Core Objectives -->
+                <Border Style="{StaticResource Panel}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="CORE OBJECTIVES" Style="{StaticResource LblCaption}"/>
+                        <Label Text="1. Connect community members who want to lend or borrow household tools and equipment." Style="{StaticResource LblBody}"/>
+                        <Label Text="2. Manage item availability and borrowing reservations through a digital booking system." Style="{StaticResource LblBody}"/>
+                        <Label Text="3. Record item conditions, deposits, and borrowing history to make community sharing safer and more organized." Style="{StaticResource LblBody}"/>
+                        <Label Text="4. Promote smart community resource sharing by helping users reuse available items instead of buying them unnecessarily." Style="{StaticResource LblBody}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Developer Information -->
+                <Border Style="{StaticResource Panel}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="DEVELOPER INFORMATION" Style="{StaticResource LblCaption}"/>
+                        <Label Text="Mohamed Ali Abdelbagi Eltahir" Style="{StaticResource LblBold}" FontSize="15"/>
+                        <Label Text="Student ID: BSW01086109" Style="{StaticResource LblBody}"/>
+                        <Label Text="Course: CSNB544 / CGMB5243 – Mobile Application Development" Style="{StaticResource LblMuted}"/>
+                        <Label Text="College of Computing and Informatics, Putrajaya Campus" Style="{StaticResource LblMuted}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Terms & Contact -->
+                <Border Style="{StaticResource Panel}">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="SUPPORT &amp; GUIDELINES" Style="{StaticResource LblCaption}"/>
+                        <Label Text="Contact: support@sharenest.app" Style="{StaticResource LblBody}"/>
+                        <Label Text="Neighbourhood usage, safety rules and deposit policies apply." Style="{StaticResource LblMuted}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Version history: v1.0 — Initial Release (Final Examination Demo)" Style="{StaticResource LblMuted}" HorizontalOptions="Center" Margin="0,4,0,16"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
