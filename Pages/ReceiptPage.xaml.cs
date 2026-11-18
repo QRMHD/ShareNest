@@ -25,13 +25,28 @@ public partial class ReceiptPage : ContentPage
         string method = payment?.MethodDisplayName ?? booking?.PaymentMethod ?? "DuitNow QR";
         string itemName = payment?.ItemName ?? booking?.ItemName ?? item?.Name ?? "Equipment";
 
+        bool isCash = (payment?.Method == PaymentMethod.CashOnPickup) || method.Contains("Cash", StringComparison.OrdinalIgnoreCase);
+
         ReceiptNoLbl.Text = receiptNo;
         TxnRefLbl.Text = txn;
         DateTimeLbl.Text = DateTime.Now.ToString("dd MMM yyyy, h:mm tt");
         MethodLbl.Text = method;
         ItemNameLbl.Text = itemName;
         DepositLbl.Text = $"RM {amount:0.00}";
-        TotalPaidLbl.Text = $"RM {amount:0.00}";
+        TotalPaidLbl.Text = isCash ? $"RM {amount:0.00} (Due on Handover)" : $"RM {amount:0.00}";
+
+        if (isCash)
+        {
+            SuccessTitleLbl.Text = "Reservation Confirmed!";
+            SuccessSubLbl.Text = "Bring exact cash deposit to the equipment handover";
+            ReceiptBadgeLbl.Text = "💵 PAY ON PICKUP";
+        }
+        else
+        {
+            SuccessTitleLbl.Text = "Payment Authorized!";
+            SuccessSubLbl.Text = "Security deposit locked safely in Escrow";
+            ReceiptBadgeLbl.Text = "🔒 HELD IN ESCROW";
+        }
 
         if (booking is not null)
         {

@@ -20,8 +20,8 @@
                         <Label Text="✓" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource TealText}"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Border>
-                    <Label Text="Payment Authorized!" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center"/>
-                    <Label Text="Security deposit locked safely in Escrow" FontSize="13" TextColor="{StaticResource SubtleText}" HorizontalOptions="Center"/>
+                    <Label x:Name="SuccessTitleLbl" Text="Payment Authorized!" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource Navy}" HorizontalOptions="Center"/>
+                    <Label x:Name="SuccessSubLbl" Text="Security deposit locked safely in Escrow" FontSize="13" TextColor="{StaticResource SubtleText}" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
 
                 <!-- Official ShareNest E-Receipt Card -->

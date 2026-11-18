@@ -58,6 +58,13 @@ public partial class PaymentPage : ContentPage
         ProceedFpxBtn.Text = $"Proceed to {_selectedBank.PortalName} (RM {_deposit:0.00})";
         PayCardBtn.Text = $"Pay RM {_deposit:0.00} Securely";
 
+        // Cash on Pickup labels
+        CashItemNameLbl.Text = item.Name;
+        CashOwnerLbl.Text = $"{item.Owner} (Equipment Owner)";
+        CashPickupDateLbl.Text = $"{booking.PickupDate:d MMM yyyy} at {DateTime.Today.Add(AppState.PickupTime):h:mm tt}";
+        CashAmountLbl.Text = $"RM {_deposit:0.00}";
+        ConfirmCashBtn.Text = $"Confirm Cash on Pickup Reservation (RM {_deposit:0.00})";
+
         // Setup QR Drawable
         QrCanvas.Drawable = new DuitNowQrDrawable
         {
@@ -69,7 +76,9 @@ public partial class PaymentPage : ContentPage
 
         // Switch to the specific payment method selected on Reserve screen
         string method = booking.PaymentMethod;
-        if (method.Contains("FPX", StringComparison.OrdinalIgnoreCase))
+        if (method.Contains("Cash", StringComparison.OrdinalIgnoreCase))
+            SetMethod("cash");
+        else if (method.Contains("FPX", StringComparison.OrdinalIgnoreCase))
             SetMethod("fpx");
         else if (method.Contains("Card", StringComparison.OrdinalIgnoreCase))
             SetMethod("card");
@@ -88,32 +97,31 @@ public partial class PaymentPage : ContentPage
     {
         _activeMethodKey = key;
 
-        if (key == "fpx")
-        {
-            SectionFpx.IsVisible = true;
-            SectionQr.IsVisible = false;
-            SectionCard.IsVisible = false;
+        SectionFpx.IsVisible = (key == "fpx");
+        SectionQr.IsVisible = (key == "qr");
+        SectionCard.IsVisible = (key == "card");
+        SectionCash.IsVisible = (key == "cash");
 
+        if (key == "cash")
+        {
+            PageAppBar.Title = "Cash on Pickup";
+            SelectedMethodLbl.Text = "💵 Cash on Pickup (In-Person Handover)";
+            StopQrTimer();
+        }
+        else if (key == "fpx")
+        {
             PageAppBar.Title = "Online Banking (FPX)";
             SelectedMethodLbl.Text = "🏦 Online Banking (FPX)";
             StopQrTimer();
         }
         else if (key == "card")
         {
-            SectionFpx.IsVisible = false;
-            SectionQr.IsVisible = false;
-            SectionCard.IsVisible = true;
-
             PageAppBar.Title = "Card Payment";
             SelectedMethodLbl.Text = "💳 Debit / Credit Card";
             StopQrTimer();
         }
         else // qr
         {
-            SectionFpx.IsVisible = false;
-            SectionQr.IsVisible = true;
-            SectionCard.IsVisible = false;
-
             PageAppBar.Title = "DuitNow QR Payment";
             SelectedMethodLbl.Text = "📱 DuitNow QR";
             StartQrTimer();
@@ -123,6 +131,7 @@ public partial class PaymentPage : ContentPage
     async void OnChangeMethodTapped(object? sender, TappedEventArgs e)
     {
         var pick = await DisplayActionSheet("Switch payment method", "Cancel", null,
+            "💵 Cash on Pickup (Direct to Owner)",
             "🏦 Online Banking (FPX)",
             "📱 DuitNow QR / TNG eWallet",
             "💳 Debit / Credit Card (Visa/Mastercard)");
@@ -130,7 +139,12 @@ public partial class PaymentPage : ContentPage
         if (pick is null or "Cancel") return;
 
         var booking = AppState.SelectedBooking;
-        if (pick.Contains("FPX"))
+        if (pick.Contains("Cash"))
+        {
+            SetMethod("cash");
+            if (booking is not null) booking.PaymentMethod = "Cash on Pickup";
+        }
+        else if (pick.Contains("FPX"))
         {
             SetMethod("fpx");
             if (booking is not null) booking.PaymentMethod = "Online Banking (FPX)";
@@ -329,6 +343,12 @@ public partial class PaymentPage : ContentPage
         await RunProcessingSequenceAsync(PaymentMethod.Card, $"{brand} •••• {last4}");
     }
 
+    // ---------------------------------------------------------------- Cash on Pickup
+    async void OnConfirmCashReservation(object? sender, EventArgs e)
+    {
+        await RunProcessingSequenceAsync(PaymentMethod.CashOnPickup, "Direct to Owner");
+    }
+
     // ---------------------------------------------------------------- Realistic Processing Sequence
     async Task RunProcessingSequenceAsync(PaymentMethod method, string provider)
     {
@@ -336,19 +356,32 @@ public partial class PaymentPage : ContentPage
 
         ProcessingStepLbl.Text = method switch
         {
+            PaymentMethod.CashOnPickup => "Registering Cash on Pickup Handover Agreement...",
             PaymentMethod.FPX => $"Connecting to {_selectedBank.PortalName} secure switch...",
             PaymentMethod.DuitNowQR => "Querying PayNet DuitNow network for incoming push...",
             _ => "Connecting to 3D-Secure Card Network..."
         };
-        await Task.Delay(1100);
-
-        ProcessingStepLbl.Text = $"Authorizing transaction reference {_reference}...";
-        await Task.Delay(1100);
-
-        ProcessingStepLbl.Text = $"Securing RM {_deposit:0.00} into ShareNest Escrow Vault...";
         await Task.Delay(1000);
 
-        ProcessingStepLbl.Text = "✓ Payment Approved & Escrow Guaranteed!";
+        ProcessingStepLbl.Text = method switch
+        {
+            PaymentMethod.CashOnPickup => $"Recording cash deposit terms: RM {_deposit:0.00} due on handover...",
+            _ => $"Authorizing transaction reference {_reference}..."
+        };
+        await Task.Delay(1000);
+
+        ProcessingStepLbl.Text = method switch
+        {
+            PaymentMethod.CashOnPickup => "Generating official Handover Voucher & instructions...",
+            _ => $"Securing RM {_deposit:0.00} into ShareNest Escrow Vault..."
+        };
+        await Task.Delay(900);
+
+        ProcessingStepLbl.Text = method switch
+        {
+            PaymentMethod.CashOnPickup => "✓ Reservation Confirmed & Cash Voucher Generated!",
+            _ => "✓ Payment Approved & Escrow Guaranteed!"
+        };
         await Task.Delay(700);
 
         ProcessingOverlay.IsVisible = false;
