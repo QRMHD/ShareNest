@@ -1,4 +1,4 @@
-# ShareNest – .NET MAUI app (frontend, built from the Figma design)
+# ShareNest – .NET MAUI app 
 
 A complete, standalone project: all 12 screens, navigation from the screens map, app icon, splash screen.
 Data is stored in a local **SQLite** database (`sharenest.db3` in the app data folder) – it survives closing the app.
